@@ -1,16 +1,16 @@
 package com.travel.prep.server;
 
-import com.travel.prep.client.GreetingService;
-import com.travel.prep.shared.FieldVerifier;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.travel.prep.client.TravelPrepService;
+import com.travel.prep.shared.FieldVerifier;
 
 /**
  * The server side implementation of the RPC service.
  */
 @SuppressWarnings("serial")
-public class GreetingServiceImpl extends RemoteServiceServlet implements
-		GreetingService {
-
+public class TravelPrepServiceImpl extends RemoteServiceServlet implements
+		TravelPrepService {
+	
 	public String greetServer(String input) throws IllegalArgumentException {
 		// Verify that the input is valid. 
 		if (!FieldVerifier.isValidName(input)) {

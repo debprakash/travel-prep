@@ -1,3 +1,5 @@
+<%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
+<%@ page import="com.google.appengine.api.users.UserService" %>
 <!doctype html>
 <!-- The DOCTYPE declaration above will set the     -->
 <!-- browser's rendering engine into                -->
@@ -16,7 +18,7 @@
     <!--                                           -->
     <!-- Any title is fine                         -->
     <!--                                           -->
-    <title>Web Application Starter Project</title>
+    <title>Travel Prep</title>
     
     <!--                                           -->
     <!-- This script loads your compiled module.   -->
@@ -43,20 +45,45 @@
         in order for this application to display correctly.
       </div>
     </noscript>
-
-    <h1>Web Application Starter Project</h1>
-
-    <table align="center">
-      <tr>
-        <td colspan="2" style="font-weight:bold;">Please enter your name:</td>        
-      </tr>
-      <tr>
-        <td id="nameFieldContainer"></td>
-        <td id="sendButtonContainer"></td>
-      </tr>
-      <tr>
-        <td colspan="2" style="color:red;" id="errorLabelContainer"></td>
-      </tr>
-    </table>
+	<% String pageUrl = request.getRequestURI() + "?" + request.getQueryString(); %>
+	<table height=100% width=100% cellspacing=0 cellpadding=0 border=1>
+		<tr>
+			<td>
+			<div align="right">
+				<%
+					UserService userService = UserServiceFactory.getUserService();
+	        		if (request.getUserPrincipal() != null) {
+	    		%>
+	    			<%= request.getUserPrincipal().getName()%>&nbsp;<a href="<%= UserServiceFactory.getUserService().createLogoutURL(pageUrl) %>">Sign Out</a>
+	    		<%
+	        		} else {
+	   			%>
+						<a href="<%= UserServiceFactory.getUserService().createLoginURL(pageUrl) %>">Login</a>
+	       		<%
+	        		}
+				%>
+			</div>
+			</td>
+		</tr>
+		<tr>
+			<td><h1>Travel Prep</h1></td>
+		</tr>
+		<tr>
+			<td>
+		    <table align="center">
+		      <tr>
+		        <td colspan="2" style="font-weight:bold;">Please enter your name:</td>        
+		      </tr>
+		      <tr>
+		        <td id="nameFieldContainer"></td>
+		        <td id="sendButtonContainer"></td>
+		      </tr>
+		      <tr>
+		        <td colspan="2" style="color:red;" id="errorLabelContainer"></td>
+		      </tr>
+		    </table>
+			</td>
+		</tr>
+	</table>
   </body>
 </html>

@@ -1,6 +1,5 @@
 package com.travel.prep.client;
 
-import com.travel.prep.shared.FieldVerifier;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -16,6 +15,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.travel.prep.shared.FieldVerifier;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -32,8 +32,7 @@ public class Travel_prep implements EntryPoint {
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting service.
 	 */
-	private final GreetingServiceAsync greetingService = GWT
-			.create(GreetingService.class);
+	private final TravelPrepServiceAsync service = GWT.create(TravelPrepService.class);
 
 	/**
 	 * This is the entry point method.
@@ -41,9 +40,9 @@ public class Travel_prep implements EntryPoint {
 	public void onModuleLoad() {
 		final Button sendButton = new Button("Send");
 		final TextBox nameField = new TextBox();
-		nameField.setText("GWT User");
+		nameField.setText("");
 		final Label errorLabel = new Label();
-
+		
 		// We can add style names to widgets
 		sendButton.addStyleName("sendButton");
 
@@ -52,6 +51,7 @@ public class Travel_prep implements EntryPoint {
 		RootPanel.get("nameFieldContainer").add(nameField);
 		RootPanel.get("sendButtonContainer").add(sendButton);
 		RootPanel.get("errorLabelContainer").add(errorLabel);
+		
 
 		// Focus the cursor on the name field when the app loads
 		nameField.setFocus(true);
@@ -119,7 +119,7 @@ public class Travel_prep implements EntryPoint {
 				sendButton.setEnabled(false);
 				textToServerLabel.setText(textToServer);
 				serverResponseLabel.setText("");
-				greetingService.greetServer(textToServer,
+				service.greetServer(textToServer,
 						new AsyncCallback<String>() {
 							public void onFailure(Throwable caught) {
 								// Show the RPC error message to the user
