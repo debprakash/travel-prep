@@ -1,5 +1,8 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
 <%@ page import="com.google.appengine.api.users.UserService" %>
+<%@ page import="com.google.appengine.api.users.User" %>
+
 <!doctype html>
 <!-- The DOCTYPE declaration above will set the     -->
 <!-- browser's rendering engine into                -->
@@ -26,6 +29,30 @@
     <!-- be added before this line.                -->
     <!--                                           -->
     <script type="text/javascript" language="javascript" src="travel_prep/travel_prep.nocache.js"></script>
+	<script type="text/javascript">
+	
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-33281154-3']);
+	  _gaq.push(['_trackPageview']);
+	
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	
+	</script>
+	<script type="text/javascript"><!--
+	google_ad_client = "ca-pub-1944794895294143";
+	/* travel-prep-small */
+	google_ad_slot = "8801617217";
+	google_ad_width = 728;
+	google_ad_height = 15;
+	//-->
+	</script>
+	<script type="text/javascript"
+	src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+	</script>
   </head>
 
   <!--                                           -->
@@ -45,20 +72,20 @@
         in order for this application to display correctly.
       </div>
     </noscript>
-	<% String pageUrl = request.getRequestURI() + "?" + request.getQueryString(); %>
-	<table height=100% width=100% cellspacing=0 cellpadding=0 border=1>
+	<table height=100% width=100% cellspacing=0 cellpadding=0 border=0>
 		<tr>
 			<td>
 			<div align="right">
 				<%
 					UserService userService = UserServiceFactory.getUserService();
-	        		if (request.getUserPrincipal() != null) {
+	        		User user = userService.getCurrentUser();
+	        	    if (user != null) {
 	    		%>
-	    			<%= request.getUserPrincipal().getName()%>&nbsp;<a href="<%= UserServiceFactory.getUserService().createLogoutURL(pageUrl) %>">Sign Out</a>
+	    			<%=user.getNickname()%>[<%= user.getEmail()%>]&nbsp;<a href="<%= UserServiceFactory.getUserService().createLogoutURL(request.getRequestURI()) %>">Sign-out</a>
 	    		<%
 	        		} else {
 	   			%>
-						<a href="<%= UserServiceFactory.getUserService().createLoginURL(pageUrl) %>">Login</a>
+						<a href="<%= UserServiceFactory.getUserService().createLoginURL(request.getRequestURI()) %>">Login</a>
 	       		<%
 	        		}
 				%>
@@ -79,7 +106,20 @@
 		        <td id="sendButtonContainer"></td>
 		      </tr>
 		      <tr>
+		        <td colspan="2" id="mapContainer">
+		        </td>        
+		      </tr>
+		      <tr>
 		        <td colspan="2" style="color:red;" id="errorLabelContainer"></td>
+		      </tr>
+		      <tr>
+		      <td>
+				<!-- Begin Official PayPal Seal -->
+				<a href="https://www.paypal.com/us/verified/pal=debprakash%40gmail%2ecom" target="_blank">
+				<img src="https://www.paypal.com/en_US/i/icon/verification_seal.gif" border="0" alt="Official PayPal Seal">
+				</A>
+				<!-- End Official PayPal Seal -->		      
+		      </td>
 		      </tr>
 		    </table>
 			</td>
